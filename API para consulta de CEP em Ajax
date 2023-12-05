@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta author="Maciel oliveira"
+    <title>Ajax - Req. Assi.</title>
+</head>
+<body>
+    <h1>Consulta CEP</h1>
+        <form id="cepForm">
+            <label for="cepInput">CEP : </label>
+            <input type="text" id="cepInput" maxlength="8" required>
+            <button type="button" onclick="consultarCep()">Consultar</button>
+
+        </form>
+
+        <br>
+
+        <form id="endereco">
+            <label for="logradouro">Logradouro : </label>
+            <input type="text" id="logradouro" required>
+            <br>
+            <label for="complemento">Complemento : </label>
+            <input type="text" id="complemento" required>
+            <br>
+            <label for="bairro">Bairro : </label>
+            <input type="text" id="bairro" required>
+            <br>
+            <label for="cidade">Cidade : </label>
+            <input type="text" id="cidade" required>
+            <br>
+            <label for="estado">Estado : </label>
+            <input type="text" id="estado" required>
+            <br>
+            <label for="pais">País : </label>
+            <input type="text" id="pais" required>
+
+            <!--button type="button" onclick="consultarCep()">Consultar<button-->
+
+        </form>
+    <script>
+        //Função para buscar
+
+        function consultarCep() {
+            //Obtem valor de CEP
+            let cepInput = document.getElementById('cepInput')
+            let cep = cepInput.value.replace(/\D/g, '')
+            let url = 'https://viacep.com.br/ws/'+cep+'/json/'
+        
+        //Requisição Assincrona com FETCH, FETCH retorna o valor da API
+
+        fetch(url)
+            .then(response => response.json()) //Converte resposta em JSON
+            .then(data => exibirResultados(data)) //Chama a função pra exibir
+            .catch(error => console.error("Erro :", error))
+            
+        }
+
+        function exibirResultados(data) {
+            document.getElementById('logradouro').value = data.logradouro
+            document.getElementById('complemento').value = data.complemento
+            document.getElementById('bairro').value = data.bairro
+            document.getElementById('cidade').value = data.localidade
+            document.getElementById('estado').value = data.uf
+            document.getElementById('pais').value = 'Brasil'
+           
+        }
+    </script>
+</body>
+</html>
